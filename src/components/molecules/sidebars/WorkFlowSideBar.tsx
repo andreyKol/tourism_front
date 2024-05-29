@@ -15,14 +15,18 @@ export const WorkFlowSideBar = () => {
     <ColumnBox
       sx={{
         maxWidth: "100px",
+        maxHeight: "calc(100% - 40px)",
         background: "#004ccc",
         alignItems: "center",
-        padding: "15px",
+        padding: "26px 16px 16px",
         boxSizing: "border-box",
         cursor: "pointer",
+        margin: "20px",
+        borderRadius: "16px",
       }}
     >
       <button
+        className="side__btn"
         onClick={() => {
           navigate("/");
           dispatch(setActiveChat(""));
@@ -46,6 +50,7 @@ export const WorkFlowSideBar = () => {
         />
       </button>
       <button
+        className="side__btn"
         onClick={() => {
           navigate("/profile");
           dispatch(setActiveChat(""));

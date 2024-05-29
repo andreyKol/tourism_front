@@ -195,3 +195,29 @@ span.ripple {
   }
 
 }
+
+
+.side__btn {
+  transition: all 200ms ease-in-out;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.cards {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  width: 100%;
+  padding: 0;
+}
+
+.card {
+  cursor: pointer;
+  border-radius: 12px;
+  background: none;
+  border: 0.4px solid black;
+  height: 240px;
+  width: 100%;
+}

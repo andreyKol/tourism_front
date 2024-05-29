@@ -2,30 +2,18 @@ import { ColumnBox } from "../../atoms/boxes/ColumnBox";
 import { RowBox } from "../../atoms/boxes/RowBox";
 import { TextTypography } from "../../atoms/typographies/TextTypography";
 
-import avatar1 from "../../../assets/svg/avatars/avatar1.svg";
-import avatar2 from "../../../assets/svg/avatars/avatar2.svg";
-import avatar3 from "../../../assets/svg/avatars/avatar3.svg";
-import avatar4 from "../../../assets/svg/avatars/avatar4.svg";
-import avatar5 from "../../../assets/svg/avatars/avatar5.svg";
-
 import { InfoCard } from "../cards/InfoCard";
 
 interface Props {
-  clients: {
+  countries: {
     ID: number;
     Name: string;
-    Surname: string;
-    Age: number;
-    Email: string;
-    Phone: string;
-    LastOnline: string;
-    Patronymic: string;
-    Role: number;
+    Description: string;
   }[];
-  onDoctorClick: (doctorId: number) => void;
+  onCountryClick: (countryId: number) => void;
 }
 
-export const ChooseClient = ({ clients, onDoctorClick }: Props) => {
+export const ChooseCountry = ({ countries, onCountryClick }: Props) => {
   return (
     <ColumnBox>
       <RowBox
@@ -43,7 +31,7 @@ export const ChooseClient = ({ clients, onDoctorClick }: Props) => {
             fontSize: "26px",
           }}
         >
-          {"Выборите страну для путешествия"}
+          {"Выберите страну для путешествия"}
         </TextTypography>
       </RowBox>
       <RowBox
@@ -56,9 +44,16 @@ export const ChooseClient = ({ clients, onDoctorClick }: Props) => {
           //   justifyContent: 'center',
         }}
       >
-        {clients?.map((client) => (
-          <InfoCard onClick={onDoctorClick} doctor={client} key={client.ID} />
-        ))}
+        <ul className="cards">
+          {countries?.map((country) => (
+            <li className="cards__item" key={country.ID}>
+              <button className="card" onClick={() => onCountryClick}>
+                <h2 className="card__title">{country.Name}</h2>
+                <p className="card__desc">{country.Description}</p>
+              </button>
+            </li>
+          ))}
+        </ul>
       </RowBox>
     </ColumnBox>
   );
