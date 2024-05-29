@@ -1,0 +1,197 @@
+body {
+  margin: 0;
+  /* width: 100vw;
+  height: 100vh; */
+}
+
+:root {
+  font-family: Onest, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+li {
+  list-style-type: none;
+}
+input {
+  border: none;
+  font-size: 16px;
+  font-family: Onest;
+  box-sizing: border-box;
+}
+input[type='search']::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  background-image: url('/svg/xIcon.svg');
+  background-size: cover;
+  cursor: pointer;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+input:focus {
+  outline: none;
+}
+input::placeholder {
+  color: #98a5bd;
+  font-size: 16px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+input:-internal-autofill-selected {
+  /* -webkit-box-shadow: 0 0 0px 40rem #ffff inset; */
+}
+
+span.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 700ms linear;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+@keyframes ripple {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.react-datepicker {
+  font-family: Onest;
+}
+.react-datepicker.customCalendar,
+.react-datepicker__month-container,
+.react-datepicker__week {
+  width: 100%;
+  height: 100%;
+  border: none;
+  box-sizing: border-box;
+}
+.react-datepicker__header {
+  background-color: transparent;
+  border: none;
+}
+.react-datepicker__navigation--next {
+  right: 10px;
+}
+.react-datepicker__navigation--previous {
+  left: 10px;
+}
+.react-datepicker__current-month {
+  font-family: Onest;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+.react-datepicker__day-names {
+  display: none;
+}
+.react-datepicker__month,
+.react-datepicker__week {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.react-datepicker__week {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.react-datepicker__month-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+.react-datepicker__day {
+  font-family: Onest;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin: 0;
+  width: 14.3%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+}
+
+.react-datepicker__day--in-range,
+.react-datepicker__day--in-selecting-range {
+  border-radius: 50%;
+}
+.react-datepicker__day--in-range:hover {
+  border: none;
+  border-radius: 0;
+}
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+}
+.react-datepicker__day--range-start,
+.react-datepicker__day--selecting-range-start,
+.react-datepicker__day--selecting-range-start:hover,
+.react-datepicker__day--range-start:hover {
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+.react-datepicker__day--range-end,
+.react-datepicker__day--selecting-range-end,
+.react-datepicker__day--selecting-range-end:hover,
+.react-datepicker__day--range-end:hover {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+#loader {
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@media (max-width: 620px) {
+  #hde-container {
+    inset: unset !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    top: -15px !important;
+    left: auto !important;
+    right: -15px !important;
+  }
+
+}

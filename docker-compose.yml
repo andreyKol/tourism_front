@@ -1,0 +1,12 @@
+services:
+  front:
+    #    environment:
+    #      - AE_KEY
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart:
+      unless-stopped
+    container_name: medical_chat_frontend
+    ports:
+      - "3000:4173"

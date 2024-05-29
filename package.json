@@ -1,0 +1,43 @@
+{
+  "name": "doctors_chat",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --open",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.8",
+    "@reduxjs/toolkit": "^2.2.1",
+    "async-mutex": "^0.4.1",
+    "i18next": "^23.4.5",
+    "i18next-browser-languagedetector": "^7.1.0",
+    "jwt-decode": "^4.0.0",
+    "qrcode.react": "^3.1.0",
+    "react": "^18.2.0",
+    "react-datepicker": "^6.3.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.50.1",
+    "react-i18next": "^13.2.0",
+    "react-redux": "^9.1.0",
+    "react-router-dom": "^6.22.1",
+    "recharts": "^2.12.1",
+    "socket.io-client": "^4.7.5",
+    "typescript-cookie": "^1.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.20",
+    "@types/react": "^18.2.15",
+    "@types/react-datepicker": "^6.2.0",
+    "@types/react-dom": "^18.2.7",
+    "@types/socket.io-client": "^3.0.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "prettier": "^3.2.5",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  }
+}
