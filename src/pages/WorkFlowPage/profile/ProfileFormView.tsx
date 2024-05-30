@@ -116,13 +116,14 @@ export const ProfileFormView = () => {
         </TextTypography>
       </div>
       <RowBox
+        style={{ display: "flex", justifyContent: "center", gap: "10%" }}
         sx={{
           padding: "80px 60px",
           boxSizing: "border-box",
           gap: "40px",
         }}
       >
-        <ColumnBox>
+        <ColumnBox style={{ width: "auto" }}>
           <div>
             <img
               src={updData && updData.imageFile ? updData.imageFile : avatar}
@@ -137,21 +138,23 @@ export const ProfileFormView = () => {
               marginTop: "20px",
             }}
           >
-            <ConfirmButton
+            <button
+              className="btn"
               onClick={() => {
                 !editMode ? setEditMode(true) : updateUser();
               }}
             >
               {!editMode ? "Изменить" : "Сохранить"}
-            </ConfirmButton>
-            <ConfirmButton
+            </button>
+            <button
+              className="btn btn--gray"
               onClick={() => {
                 logoutUser();
               }}
               disabled={editMode}
             >
               {"Выйти из аккаунта"}
-            </ConfirmButton>
+            </button>
           </div>
         </ColumnBox>
         {!editMode ? (
@@ -159,6 +162,7 @@ export const ProfileFormView = () => {
             sx={{
               gap: "10px",
             }}
+            style={{ maxWidth: "360px" }}
           >
             <div
               style={{
@@ -436,6 +440,7 @@ export const ProfileFormView = () => {
           </ColumnBox>
         ) : (
           <ColumnBox
+            style={{ maxWidth: "360px" }}
             sx={{
               gap: "10px",
             }}

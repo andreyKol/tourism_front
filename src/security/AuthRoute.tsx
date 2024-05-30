@@ -1,19 +1,20 @@
-import { jwtDecode } from 'jwt-decode';
-import { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
-import { getCookie } from 'typescript-cookie';
-import { setUser } from '../store/redux/user/user.slice';
-import { useAppDispatch } from '../store/store';
+import { jwtDecode } from "jwt-decode";
+import { ReactNode } from "react";
+import { Navigate } from "react-router-dom";
+import { getCookie } from "typescript-cookie";
+import { setUser } from "../store/redux/user/user.slice";
+import { useAppDispatch } from "../store/store";
 
 interface Props {
   children: ReactNode;
 }
 
 export const AuthRoute = ({ children: PageComponent }: Props) => {
-  const currentUser = getCookie('token');
+  const currentUser = getCookie("token");
   const dispatch = useAppDispatch();
 
-  if (!currentUser || currentUser === 'undefined') {
+  if (!currentUser || currentUser === "undefined") {
+    console.log(0, currentUser);
     return <Navigate to="/landing" />;
   }
 
@@ -25,7 +26,7 @@ export const AuthRoute = ({ children: PageComponent }: Props) => {
   dispatch(
     setUser({
       id: user.id,
-      role: 2,
+      role: 1,
     })
   );
 

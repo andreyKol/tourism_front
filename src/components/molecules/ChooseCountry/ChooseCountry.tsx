@@ -8,6 +8,7 @@ interface Country {
   ID: number;
   Name: string;
   Description: string;
+  Image: string;
 }
 
 interface Props {
@@ -60,6 +61,11 @@ export const ChooseCountry = ({ countries, onCountryClick }: Props) => {
               <button className="card" onClick={() => onCountryClick(country)}>
                 <h2 className="card__title">{country.Name}</h2>
                 <p className="card__desc">{country.Description}</p>
+                <img
+                  src={country.Image}
+                  alt="BG country"
+                  className="card__image"
+                />
               </button>
             </li>
           ))}

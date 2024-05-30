@@ -24,6 +24,7 @@ import { ChooseCountry } from "../../../components/molecules/ChooseCountry/Choos
 import { useGetCountriesMutation } from "../../../api/countries/countriesApi.ts";
 import { Country } from "../../../components/molecules/Country/Country.tsx";
 import { count } from "console";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const isEmptyObject = (obj: object) => {
   return Object.keys(obj).length === 0;
@@ -33,6 +34,7 @@ export const MainFormView = () => {
   // const dispatch = useAppDispatch();
   // const [getUsers, { isLoading }] = useGetUsersMutation();
   // const [getClients] = useGetClientsMutation();
+  const navigate = useNavigate();
   const [getCountries, { isLoading }] = useGetCountriesMutation();
   // const [getMe] = useGetMeMutation();
   // const [userData, setUserData] = useState<UserData | null>(null);
@@ -142,20 +144,18 @@ export const MainFormView = () => {
   };
 
   return (
-    <>
+    <div style={{ width: "100%" }}>
       {" "}
       {isLoading ? (
         <p>Загрузка...</p>
-      ) : selectCountry === null || isEmptyObject(selectCountry) ? (
+      ) : (
         <ChooseCountry
           countries={countries}
           onCountryClick={(obj) => {
-            setSelectCountry(obj);
+            navigate(`/countries/${obj.ID}`);
           }}
         />
-      ) : (
-        <Country country={selectCountry} />
       )}
-    </>
+    </div>
   );
 };

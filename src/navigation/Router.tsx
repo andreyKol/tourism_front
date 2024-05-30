@@ -1,31 +1,41 @@
-import { memo, ReactNode, useCallback, useEffect } from 'react';
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { MainForm } from '../pages/WorkFlowPage/Main/MainForm';
-import { ChatForm } from '../pages/WorkFlowPage/Chat/ChatForm';
-import { AuthRoute } from '../security/AuthRoute';
-import lightTheme from '../styles/themes/light';
-import { SignInForm } from '../pages/WorkFlowPage/auth/signIn/SignInForm';
-import { SignUpForm } from '../pages/WorkFlowPage/auth/signUp/SignUpForm';
-import { ProfileForm } from '../pages/WorkFlowPage/profile/ProfileForm';
-import { Landing } from '../pages/landing/Landing';
+import { memo, ReactNode, useCallback, useEffect } from "react";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import { MainForm } from "../pages/WorkFlowPage/Main/MainForm";
+import { ChatForm } from "../pages/WorkFlowPage/Chat/ChatForm";
+import { AuthRoute } from "../security/AuthRoute";
+import lightTheme from "../styles/themes/light";
+import { SignInForm } from "../pages/WorkFlowPage/auth/signIn/SignInForm";
+import { SignUpForm } from "../pages/WorkFlowPage/auth/signUp/SignUpForm";
+import { ProfileForm } from "../pages/WorkFlowPage/profile/ProfileForm";
+import { Landing } from "../pages/landing/Landing";
+import { Country } from "../components/molecules/Country/Country";
 
 export let mainTheme = lightTheme;
 
 const AnimatedRoutes = memo(() => {
   const location = useLocation();
 
-  const getElement = useCallback((children: ReactNode) => <AuthRoute>{children}</AuthRoute>, []);
+  const getElement = useCallback(
+    (children: ReactNode) => <AuthRoute>{children}</AuthRoute>,
+    []
+  );
 
   const getForm = useCallback((children: ReactNode) => children, []);
 
-  const __THEME__ = 'light';
+  const __THEME__ = "light";
 
   useEffect(() => {
-    if (!localStorage.getItem('theme')) localStorage.setItem('theme', 'light');
+    if (!localStorage.getItem("theme")) localStorage.setItem("theme", "light");
   }, []);
 
   switch (__THEME__) {
-    case 'light':
+    case "light":
       mainTheme = lightTheme;
       break;
     default:
@@ -37,7 +47,8 @@ const AnimatedRoutes = memo(() => {
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={getElement(<MainForm />)} />
       <Route path="/chat/:id" element={getElement(<ChatForm />)} />
-      <Route path="/profile" element={getElement(<ProfileForm />) } />
+      <Route path="/countries/:id" element={<Country />} />
+      <Route path="/profile" element={getElement(<ProfileForm />)} />
       <Route path="/landing" element={<Landing />} />
       <Route path="/sign-in" element={getForm(<SignInForm />)} />
       <Route path="/sign-up" element={getForm(<SignUpForm />)} />
@@ -52,4 +63,4 @@ export const Router = memo(() => (
   </BrowserRouter>
 ));
 
-Router.displayName = 'Router';
+Router.displayName = "Router";

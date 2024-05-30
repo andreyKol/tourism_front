@@ -12,61 +12,68 @@ export const WorkFlowSideBar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   return (
-    <ColumnBox
-      sx={{
-        maxWidth: "100px",
-        maxHeight: "calc(100% - 40px)",
-        background: "#004ccc",
-        alignItems: "center",
-        padding: "26px 16px 16px",
-        boxSizing: "border-box",
-        cursor: "pointer",
-        margin: "20px",
-        borderRadius: "16px",
-      }}
-    >
-      <button
-        className="side__btn"
-        onClick={() => {
-          navigate("/");
-          dispatch(setActiveChat(""));
-        }}
-        style={{
-          background: "none",
+    <>
+      <div style={{ marginLeft: "140px" }}></div>
+      <ColumnBox
+        sx={{
+          position: "fixed",
+          top: 0,
+          maxWidth: "100px",
+          maxHeight: "calc(100vh - 40px)",
+          height: "100%",
+          background: "#004ccc",
+          alignItems: "center",
+          padding: "26px 16px 16px",
+          boxSizing: "border-box",
           cursor: "pointer",
+          margin: "20px",
+          borderRadius: "16px",
+          zIndex: 10,
+        }}
+      >
+        <button
+          className="side__btn"
+          onClick={() => {
+            navigate("/");
+            dispatch(setActiveChat(""));
+          }}
+          style={{
+            background: "none",
+            cursor: "pointer",
 
-          border: "none",
-          marginBottom: "24px",
-        }}
-      >
-        <img
-          src={home}
-          style={{
-            height: "44px",
-            width: "44px",
-            pointerEvents: "none",
-            color: "#fff",
+            border: "none",
+            marginBottom: "24px",
           }}
-        />
-      </button>
-      <button
-        className="side__btn"
-        onClick={() => {
-          navigate("/profile");
-          dispatch(setActiveChat(""));
-        }}
-        style={{ background: "none", cursor: "pointer", border: "none" }}
-      >
-        <img
-          src={profile}
-          style={{
-            height: "44px",
-            width: "44px",
-            pointerEvents: "none",
-            color: "#fff",
+        >
+          <img
+            src={home}
+            style={{
+              height: "44px",
+              width: "44px",
+              pointerEvents: "none",
+              color: "#fff",
+            }}
+          />
+        </button>
+        <button
+          className="side__btn"
+          onClick={() => {
+            navigate("/profile");
+            dispatch(setActiveChat(""));
           }}
-        />
-      </button>
-    </ColumnBox>
+          style={{ background: "none", cursor: "pointer", border: "none" }}
+        >
+          <img
+            src={profile}
+            style={{
+              height: "44px",
+              width: "44px",
+              pointerEvents: "none",
+              color: "#fff",
+            }}
+          />
+        </button>
+      </ColumnBox>
+    </>
   );
 };

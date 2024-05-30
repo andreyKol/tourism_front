@@ -10,7 +10,23 @@ export const countriesApi = rtqApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getCountryById: build.mutation({
+      query: (id) => ({
+        url: `/countries/${id}`,
+        method: "GET",
+      }),
+    }),
+    getEvents: build.mutation({
+      query: (id) => ({
+        url: `/events/by/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useGetCountriesMutation } = countriesApi;
+export const {
+  useGetCountriesMutation,
+  useGetCountryByIdMutation,
+  useGetEventsMutation,
+} = countriesApi;

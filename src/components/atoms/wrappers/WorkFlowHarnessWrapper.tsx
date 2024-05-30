@@ -1,8 +1,8 @@
-import { styled } from '@mui/material';
+import { styled } from "@mui/material";
 
-export const WorkFlowHarnessWrapper = styled('div')`
+export const WorkFlowHarnessWrapper = styled("div")`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
   justify-content: start;
