@@ -4,13 +4,15 @@ import { TextTypography } from "../../atoms/typographies/TextTypography";
 
 import { InfoCard } from "../cards/InfoCard";
 
+interface Country {
+  ID: number;
+  Name: string;
+  Description: string;
+}
+
 interface Props {
-  countries: {
-    ID: number;
-    Name: string;
-    Description: string;
-  }[];
-  onCountryClick: (countryId: number) => void;
+  countries: Country[];
+  onCountryClick: (country: Country) => void;
 }
 
 export const ChooseCountry = ({ countries, onCountryClick }: Props) => {
@@ -23,6 +25,8 @@ export const ChooseCountry = ({ countries, onCountryClick }: Props) => {
           marginTop: "12px",
           boxSizing: "border-box",
           borderBottom: "1px solid lightgray",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
         <TextTypography
@@ -33,6 +37,12 @@ export const ChooseCountry = ({ countries, onCountryClick }: Props) => {
         >
           {"Выберите страну для путешествия"}
         </TextTypography>
+        <button
+          onClick={() => (window.location.href = "/landing")}
+          className="btn"
+        >
+          Лендинг
+        </button>
       </RowBox>
       <RowBox
         sx={{
@@ -47,7 +57,7 @@ export const ChooseCountry = ({ countries, onCountryClick }: Props) => {
         <ul className="cards">
           {countries?.map((country) => (
             <li className="cards__item" key={country.ID}>
-              <button className="card" onClick={() => onCountryClick}>
+              <button className="card" onClick={() => onCountryClick(country)}>
                 <h2 className="card__title">{country.Name}</h2>
                 <p className="card__desc">{country.Description}</p>
               </button>

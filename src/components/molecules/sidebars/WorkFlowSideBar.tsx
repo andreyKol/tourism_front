@@ -36,7 +36,7 @@ export const WorkFlowSideBar = () => {
           cursor: "pointer",
 
           border: "none",
-          marginBottom: "16px",
+          marginBottom: "24px",
         }}
       >
         <img

@@ -221,3 +221,37 @@ span.ripple {
   height: 240px;
   width: 100%;
 }
+
+.btn {
+  font-weight: 600;
+  outline: none;
+  border: none;
+  background: #005fff;
+  color: white;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 200ms ease-in-out;
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.btn--white {
+  font-weight: 600;
+  outline: none;
+  border: none;
+  background: white;
+  color: #005fff;
+  border: 1.4px solid transparent;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 200ms ease-in-out;
+  &:hover {
+    /* opacity: 0.85; */
+    border: 1.4px solid white;
+    color: white;
+    background: #0e61f2;
+  }
+}

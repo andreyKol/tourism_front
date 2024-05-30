@@ -1,45 +1,45 @@
 /* eslint-disable camelcase */
 
-import { rtqApi } from '../rtqApi';
+import { rtqApi } from "../rtqApi";
 
 export const usersApi = rtqApi.injectEndpoints({
   endpoints: (build) => ({
     getUsers: build.mutation({
       query: () => ({
-        url: '/users/by/2',
-        method: 'GET',
+        url: "/users/by/2",
+        method: "GET",
       }),
     }),
     getClients: build.mutation({
       query: () => ({
-        url: '/users/by/1',
-        method: 'GET',
+        url: "/users/by/1",
+        method: "GET",
       }),
     }),
     getMe: build.mutation({
       query: (id) => ({
         url: `/users/${id}`,
-        method: 'GET',
+        method: "GET",
       }),
     }),
     updateUser: build.mutation({
       query: (userData) => ({
-        url: `/users/update/${userData.ID}`,
-        method: 'PATCH',
+        url: `/users/update/${userData.id}`,
+        method: "PATCH",
         body: userData,
       }),
     }),
     updateImage: build.mutation({
       query: (userData) => ({
         url: `/users/image/${userData.ID}`,
-        method: 'POST',
+        method: "POST",
         body: { file: userData.ImageFile },
       }),
     }),
     getImage: build.mutation({
       query: (id) => ({
-        url: `/images/${id}`,
-        method: 'GET',
+        url: `/users/image/${id}`,
+        method: "GET",
       }),
     }),
   }),

@@ -22,23 +22,30 @@ import { UserData } from "../../../pages/WorkFlowPage/profile/ProfileFormView.ts
 import { ChooseClient } from "../../../components/molecules/ChooseClient/ChooseClient.tsx";
 import { ChooseCountry } from "../../../components/molecules/ChooseCountry/ChooseCountry.tsx";
 import { useGetCountriesMutation } from "../../../api/countries/countriesApi.ts";
+import { Country } from "../../../components/molecules/Country/Country.tsx";
+import { count } from "console";
+
+const isEmptyObject = (obj: object) => {
+  return Object.keys(obj).length === 0;
+};
 
 export const MainFormView = () => {
-  const dispatch = useAppDispatch();
-  const [getUsers, { isLoading }] = useGetUsersMutation();
-  const [getClients] = useGetClientsMutation();
-  const [getCountries] = useGetCountriesMutation();
-  const [getMe] = useGetMeMutation();
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [clients, setClients] = useState([]);
+  // const dispatch = useAppDispatch();
+  // const [getUsers, { isLoading }] = useGetUsersMutation();
+  // const [getClients] = useGetClientsMutation();
+  const [getCountries, { isLoading }] = useGetCountriesMutation();
+  // const [getMe] = useGetMeMutation();
+  // const [userData, setUserData] = useState<UserData | null>(null);
+  // const [clients, setClients] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [selectCountry, setSelectCountry] = useState({});
 
-  const doctors = useAppSelector((state) => state.doctors.doctors);
-  const user = useAppSelector((state) => state.user.user);
-  const conn = useAppSelector((state) => state.socket.conn);
+  // const doctors = useAppSelector((state) => state.doctors.doctors);
+  // const user = useAppSelector((state) => state.user.user);
+  // const conn = useAppSelector((state) => state.socket.conn);
 
-  const [createRoom] = useCreateRoomMutation();
-  const [joinRoom] = useJoinRoomMutation();
+  // const [createRoom] = useCreateRoomMutation();
+  // const [joinRoom] = useJoinRoomMutation();
 
   // useEffect(() => {
   //   const fetchUserData = async () => {
@@ -60,7 +67,7 @@ export const MainFormView = () => {
   useEffect(() => {
     const fetchCountriesData = async () => {
       try {
-        const response = await getCountries();
+        const response = await getCountries(0);
         if ("data" in response) {
           console.log(response.data);
           setCountries(response.data);
@@ -139,23 +146,15 @@ export const MainFormView = () => {
       {" "}
       {isLoading ? (
         <p>Загрузка...</p>
+      ) : selectCountry === null || isEmptyObject(selectCountry) ? (
+        <ChooseCountry
+          countries={countries}
+          onCountryClick={(obj) => {
+            setSelectCountry(obj);
+          }}
+        />
       ) : (
-        <>
-          <ChooseCountry countries={countries} onCountryClick={() => {}} />
-
-          {/* {userData && "Role" in userData && userData.Role == 1 ? (
-            1
-          ) : (
-            // <ChooseDoctor
-            //   doctors={doctors}
-            //   onDoctorClick={onDoctorClickHandler}
-            // />
-            // <ChooseClient
-            //   clients={clients}
-            //   onDoctorClick={onClientClickHandler}
-            // />
-          )} */}
-        </>
+        <Country country={selectCountry} />
       )}
     </>
   );

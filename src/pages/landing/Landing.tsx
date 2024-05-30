@@ -1,3 +1,4 @@
+import { Cookies } from "typescript-cookie";
 import bg from "../../assets/home-cover.webp";
 
 export const Landing = () => {
@@ -26,20 +27,21 @@ export const Landing = () => {
         >
           Туры для молодежи
         </p>
-        <button
-          onClick={() => (window.location.href = "/sign-in")}
-          style={{
-            outline: "none",
-            border: "none",
-            background: "#005fff",
-            color: "white",
-            borderRadius: "16px",
-            padding: "12px",
-            cursor: "pointer",
-          }}
-        >
-          Войти / Зарегистрироваться
-        </button>
+        {!Cookies.get("token") ? (
+          <button
+            className="btn--white"
+            onClick={() => (window.location.href = "/sign-in")}
+          >
+            Войти / Зарегистрироваться
+          </button>
+        ) : (
+          <button
+            onClick={() => (window.location.href = "/")}
+            className="btn--white"
+          >
+            Отправиться в путешествие
+          </button>
+        )}
       </header>
       <main>
         <section
@@ -74,7 +76,7 @@ export const Landing = () => {
                   fontSize: "18px",
                   fontWeight: "400",
                   padding: "10px 0",
-                  whiteSpace: "wrap",
+                  whiteSpace: "normal",
                 }}
               >
                 Узнавайте о самых интересных мероприятиях и событиях выбранной
@@ -85,7 +87,7 @@ export const Landing = () => {
                   fontSize: "18px",
                   fontWeight: "400",
                   padding: "10px 0",
-                  whiteSpace: "wrap",
+                  whiteSpace: "normal",
                 }}
               >
                 Задавайте вопросы и получайте советы по выбору направления и
@@ -96,7 +98,7 @@ export const Landing = () => {
                   fontSize: "18px",
                   fontWeight: "400",
                   padding: "10px 0",
-                  whiteSpace: "wrap",
+                  whiteSpace: "normal",
                 }}
               >
                 Мы поможем вам подобрать направление, учитывая ваши интересы и
@@ -107,7 +109,7 @@ export const Landing = () => {
                   fontSize: "18px",
                   fontWeight: "400",
                   padding: "10px 0",
-                  whiteSpace: "wrap",
+                  whiteSpace: "normal",
                 }}
               >
                 Получайте подробную информацию о культуре,
@@ -133,7 +135,7 @@ export const Landing = () => {
             alignItems: "center",
             textAlign: "center",
             maxWidth: "500px",
-            margin: "44px auto 0",
+            margin: "44px auto 100px",
           }}
         >
           <h2
@@ -156,14 +158,8 @@ export const Landing = () => {
           </p>
           <button
             onClick={() => (window.location.href = "/sign-in")}
+            className="btn"
             style={{
-              outline: "none",
-              border: "none",
-              background: "#005fff",
-              color: "white",
-              borderRadius: "16px",
-              padding: "12px",
-              cursor: "pointer",
               margin: "0 auto",
             }}
           >
