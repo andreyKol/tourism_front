@@ -2,8 +2,6 @@ import { ColumnBox } from "../../atoms/boxes/ColumnBox";
 import { RowBox } from "../../atoms/boxes/RowBox";
 import { TextTypography } from "../../atoms/typographies/TextTypography";
 
-import { InfoCard } from "../cards/InfoCard";
-
 interface Country {
   ID: number;
   Name: string;

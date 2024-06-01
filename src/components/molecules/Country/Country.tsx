@@ -104,6 +104,15 @@ export const Country = () => {
               <p className="country__desc">
                 {countryData && countryData.Description}
               </p>
+              <button
+                className="btn"
+                onClick={() => {
+                  window.location.href = `/chat/${countryId}`;
+                  // navigate(`/chat/${countryId}`);
+                }}
+              >
+                Перейти к обсуждению
+              </button>
             </div>
             <img
               src={countryData && countryData.Image}

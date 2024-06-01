@@ -156,9 +156,7 @@ export const SignUpFormView = () => {
             password: inputValues.password,
           })
             .unwrap()
-            .then((response) => {
-              console.log("reg", response);
-              setCookie("token", response?.data);
+            .then(() => {
               navigate("/sign-in");
             })
             .catch((response) => {
