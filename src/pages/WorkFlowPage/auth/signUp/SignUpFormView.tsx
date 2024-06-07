@@ -118,6 +118,7 @@ export const SignUpFormView = () => {
         />
         <CustomInput
           id="password"
+          type="password"
           value={inputValues.password}
           placeholder="Пароль"
           onChange={handleInputChange}
@@ -125,6 +126,7 @@ export const SignUpFormView = () => {
         />
         <CustomInput
           id="repeatPassword"
+          type="password"
           value={inputValues.repeatPassword}
           placeholder="Повторите пароль"
           onChange={handleInputChange}

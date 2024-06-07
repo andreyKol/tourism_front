@@ -39,7 +39,7 @@ export const wsChatsApi = wsApi.injectEndpoints({
   endpoints: (build) => ({
     joinRoom: build.mutation({
       query: ({ roomId, userId }) => ({
-        url: `/ws/joinRoom/${roomId}/?clientId=${userId}`,
+        url: `/ws/joinRoom/${roomId}?clientId=${userId}`,
         method: "GET",
       }),
     }),

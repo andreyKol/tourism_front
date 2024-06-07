@@ -26,44 +26,10 @@ import { Country } from "../../../components/molecules/Country/Country.tsx";
 import { count } from "console";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const isEmptyObject = (obj: object) => {
-  return Object.keys(obj).length === 0;
-};
-
 export const MainFormView = () => {
-  const dispatch = useAppDispatch();
-  // const [getUsers, { isLoading }] = useGetUsersMutation();
-  // const [getClients] = useGetClientsMutation();
   const navigate = useNavigate();
   const [getCountries, { isLoading }] = useGetCountriesMutation();
-  // const [getMe] = useGetMeMutation();
-  // const [userData, setUserData] = useState<UserData | null>(null);
-  // const [clients, setClients] = useState([]);
   const [countries, setCountries] = useState([]);
-  const [selectCountry, setSelectCountry] = useState({});
-
-  // const doctors = useAppSelector((state) => state.doctors.doctors);
-  const user = useAppSelector((state) => state.user.user);
-  // const conn = useAppSelector((state) => state.socket.conn);
-
-  const [joinRoom] = useJoinRoomMutation();
-
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const response = await getMe(user.id);
-  //       if ("data" in response) {
-  //         setUserData(response.data);
-  //       } else if ("error" in response) {
-  //         console.error("Error fetching user data:", response.error);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching user data:", error);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
 
   useEffect(() => {
     const fetchCountriesData = async () => {
@@ -83,43 +49,6 @@ export const MainFormView = () => {
     fetchCountriesData();
   }, []);
 
-  // useEffect(() => {
-  const onCountryClickHandler = async (id: number) => {
-    // const roomResponse = await createRoom(id).unwrap();
-    console.log("Room created: ", roomResponse);
-    const roomId = (roomResponse as any).id;
-
-    const ws = new WebSocket(
-      `ws://localhost:8080/api/v1/ws/joinRoom/${roomId}?clientId=${user.id}`
-    );
-
-    if (ws.OPEN) {
-      dispatch(setConn(ws));
-      // console.log(conn);
-      console.log(roomId);
-      await joinRoom({ roomId: roomId, userId: user.id });
-      window.location.href = `/chat/${roomId}`;
-      return;
-    }
-
-    // const response = await ws.emit(`joinRoom/${roomId}`, {
-    //   clientId: user.id,
-    // });
-  };
-
-  // const onClientClickHandler = async (doctorId: number) => {
-  //   const roomId = 0;
-  //   window.location.href = `/chat/${roomId}?doctorId=${doctorId}`;
-  //   return;
-  //   // }
-
-  //   // const response = await joinRoom({ roomId: roomId, userId: user.id });
-  //   // const response = await socket.emit(`joinRoom/${roomId}`, { clientId: user.id });
-  //   // const doctorResponse = await socket.emit(`joinRoom/${roomId}`, { clientId: doctorId });
-  // };
-  //   [];
-  // });
-
   return (
     <div style={{ width: "100%" }}>
       {" "}
@@ -129,7 +58,6 @@ export const MainFormView = () => {
         <ChooseCountry
           countries={countries}
           onCountryClick={(obj) => {
-            // onCountryClickHandler(obj.ID);
             navigate(`/countries/${obj.ID}`);
           }}
         />

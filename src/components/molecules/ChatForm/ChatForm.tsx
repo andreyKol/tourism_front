@@ -16,6 +16,7 @@ import { UserData } from "../../../pages/WorkFlowPage/profile/ProfileFormView";
 import {
   useCreateRoomMutation,
   useGetMessagesMutation,
+  useJoinRoomMutation,
 } from "../../../api/chats/chatsApi";
 
 interface Imessage {
@@ -31,14 +32,12 @@ export const ChatForm = () => {
   const active = useAppSelector((state) => state.activeChat.activeChat);
   const conn = useAppSelector((state) => state.socket.conn);
   const user = useAppSelector((state) => state.user.user);
-  // const [users, setUsers] = useState<Array<{ username: string }>>([]);
   const [createRoom] = useCreateRoomMutation();
+  const [joinRoom] = useJoinRoomMutation();
+
   const roomId = useParams().id;
   const [getMe] = useGetMeMutation();
   const [getMessages] = useGetMessagesMutation();
-  // const [userData, setUserData] = useState<UserData | null>(null);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
 
   const [messages, setMessages] = useState<Imessage[]>([]);
 
@@ -54,12 +53,13 @@ export const ChatForm = () => {
       console.error("Error fetching user data:", error);
     }
   };
+
   const fetchMessages = async (chatId: string | undefined) => {
     try {
       const response = await getMessages(chatId);
       if ("data" in response) {
-        console.log(response.data);
-        if (response.data) {
+        console.log("old messages", response.data);
+        if (response.data.length > 0) {
           for (let i = 0; i < response.data.length; i++) {
             const item = response.data[i];
             const author = await fetchUserData(item.ClientID);
@@ -76,35 +76,75 @@ export const ChatForm = () => {
             ]);
           }
         } else {
-          const roomrresp = await fetchCreateRoom();
-          console.log("Создана комната #", roomrresp);
-          window.location.reload();
+          await createRoomAndJoin();
         }
       } else if ("error" in response) {
-        console.error("Error fetching user data:", response.error);
+        console.error("Error fetching messages:", response.error);
+        await createRoomAndJoin();
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      console.error("Error fetching messages:", error);
+      await createRoomAndJoin();
     }
   };
+
+  const createRoomAndJoin = async () => {
+    await fetchCreateRoom();
+    await fetchJoinRoom();
+  };
+
   const fetchCreateRoom = async () => {
     try {
       const response = await createRoom(roomId);
       if ("data" in response) {
         console.log("created room ", response.data);
       } else if ("error" in response) {
-        console.error("Error fetching create room:", response.error);
+        console.error("Error creating room:", response.error);
       }
     } catch (error) {
-      console.error("Error fetching create room:", error);
+      console.error("Error creating room:", error);
+    }
+  };
+
+  const fetchJoinRoom = async () => {
+    try {
+      const obj = { roomId: roomId, userId: user.id };
+      const response = await joinRoom(obj);
+      if ("data" in response) {
+        console.log("joined room ", response.data);
+      } else if ("error" in response) {
+        console.error("Error joining room:", response.error);
+      }
+    } catch (error) {
+      console.error("Error joining room:", error);
     }
   };
 
   useEffect(() => {
-    if (conn) {
-      conn.onmessage = async (message) => {
+    const initWebSocket = () => {
+      const ws = new WebSocket(
+        `ws://localhost:8080/api/v1/ws/joinRoom/${roomId}?clientId=${user.id}`
+      );
+
+      ws.onopen = async () => {
+        await fetchMessages(roomId);
+        const userData = await fetchUserData(user.id);
+        console.log("connected", userData);
+        dispatch(setConn(ws));
+        const connectMessage = `${userData.surname} ${userData.name} ${userData.patronymic ? userData.patronymic : ""} подключен к чату.`;
+        ws.send(connectMessage);
+        const welcome =
+          userData && userData.gender == 2
+            ? `Уважаемая ${userData.name} ${userData.patronymic ? userData.patronymic : ""}, мы рады, что Вы подключились к нашему чату. Задайте интересующие Вас вопросы!`
+            : `Уважаемый ${userData.name} ${userData.patronymic ? userData.patronymic : ""}, мы рады, что Вы подключились к нашему чату. Задайте интересующие Вас вопросы!`;
+        if (roomId && localStorage.getItem("welcome") !== roomId.toString()) {
+          localStorage.setItem("welcome", roomId.toString());
+          ws.send(welcome);
+        }
+      };
+
+      ws.onmessage = async (message) => {
         const messageData = JSON.parse(message.data);
-        console.log("!!!", messageData);
         const author = await fetchUserData(messageData.ClientID);
         setMessages((prevMessages) => [
           ...prevMessages,
@@ -119,47 +159,23 @@ export const ChatForm = () => {
         ]);
       };
 
-      conn.onopen = () => {};
-      conn.onclose = () => {
+      ws.onclose = () => {
         console.log("disconnected");
       };
-      conn.onerror = () => {
+
+      ws.onerror = () => {
         console.log("error");
       };
-      return;
+    };
+
+    if (!conn) {
+      initWebSocket();
     }
 
-    const ws = new WebSocket(
-      `ws://localhost:8080/api/v1/ws/joinRoom/${roomId}?clientId=${user.id}`
-    );
-
-    ws.onopen = async () => {
-      await fetchMessages(roomId);
-      const userData = await fetchUserData(user.id);
-      console.log("connected", userData);
-      dispatch(setConn(ws));
-      const connectMessage = `${userData.surname} ${userData.name} ${userData.patronymic ? userData.patronymic : ""} подключен к чату.`;
-      messages.length === 0 ||
-        ("Content" in messages[messages.length - 1] &&
-          messages[messages.length - 1].Content !== connectMessage &&
-          ws.send(connectMessage));
-      const welcome =
-        userData && userData.gender == 2
-          ? `Уважаемая ${userData.name} ${userData.patronymic ? userData.patronymic : ""} мы рады, что Вы подключились к нашему чату. Задайте интересующие Вас вопросы!`
-          : `Уважаемый ${userData.name} ${userData.patronymic ? userData.patronymic : ""} мы рады, что Вы подключились к нашему чату. Задайте интересующие Вас вопросы!`;
-      console.log(messages);
-      if (roomId && localStorage.getItem("welcome") !== roomId.toString()) {
-        localStorage.setItem("welcome", roomId.toString());
-        ws.send(welcome);
+    return () => {
+      if (conn) {
+        conn.close();
       }
-    };
-
-    ws.onclose = () => {
-      console.log("disconnected");
-    };
-
-    ws.onerror = () => {
-      console.log("error");
     };
   }, [conn, dispatch, roomId, user.id]);
 
@@ -175,9 +191,8 @@ export const ChatForm = () => {
   };
 
   const handleCreateMessage = () => {
-    if (inputValues.sendMessage) {
-      console.log(conn);
-      conn?.send(inputValues.sendMessage);
+    if (inputValues.sendMessage && conn) {
+      conn.send(inputValues.sendMessage);
       handleInputChange("sendMessage", "");
     }
   };
@@ -191,7 +206,7 @@ export const ChatForm = () => {
     };
 
     scrollToBottom();
-  }, [messages, conn]);
+  }, [messages]);
 
   return (
     <form
